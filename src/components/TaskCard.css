@@ -1,0 +1,13 @@
+.white-shadow {
+  box-shadow: 0 0 10px rgba(255,255,255,0.5) !important;
+}
+.button-transparent{
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.adjust-width{
+  width: 60% !important;
+}
+
