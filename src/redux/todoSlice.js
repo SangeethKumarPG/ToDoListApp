@@ -9,7 +9,8 @@ const todoSlice = createSlice({
     addItem:(state, data)=>{
         state.tasks.push({
           id:uuidv4(),
-          title:data.payload,
+          title:data.payload.task,
+          color:data.payload.color,
           completed : false
         })
       
@@ -28,9 +29,21 @@ const todoSlice = createSlice({
       state.tasks = state.tasks.filter((item)=>{
         return item.id !== data.payload;
       })
+    },
+    saveToLocalStore: (state)=>{
+      if(state.tasks){
+        localStorage.setItem("tasks",JSON.stringify(state.tasks));
+        
+      }
+    },
+    loadFromLocalStore : (state)=>{
+      if(localStorage.getItem("tasks")){
+        state.tasks = JSON.parse(localStorage.getItem("tasks"))
+
+      }
     }
   }
 })
 
 export default todoSlice.reducer;
-export const {addItem, markAsComplete, deleteTask} = todoSlice.actions;
+export const {addItem, markAsComplete, deleteTask, saveToLocalStore, loadFromLocalStore} = todoSlice.actions;

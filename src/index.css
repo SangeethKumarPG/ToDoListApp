@@ -1,6 +1,8 @@
 body {
-  background: darkslategrey;
-  color: white !important;
+  /*background: darkslategrey;*/
+
+  /*color: white !important;*/
+  color: black !important;
 }
 
 /*@keyframes Gradient {*/

@@ -14,8 +14,13 @@ import AddIcon from '@mui/icons-material/Add';
 import CheckIcon from '@mui/icons-material/Check';
 import ListIcon from '@mui/icons-material/List';
 import { useSelector, useDispatch } from 'react-redux';
-import { addItem } from './redux/todoSlice';
+import { addItem, saveToLocalStore, loadFromLocalStore } from './redux/todoSlice';
 import emptyList from './assets/empty-list.svg'
+import SaveIcon from '@mui/icons-material/Save'; 
+import LoadIcon from '@mui/icons-material/CloudDownload';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 function App() {
   const allTasks = useSelector((state) => state.todo.tasks);
@@ -31,6 +36,23 @@ function App() {
     setOpen(false);
   };
 
+  const handleSave = () => {
+    if(allTasks.length !==0 ){
+        dispatch(saveToLocalStore());  
+        toast.success("Data saved successfully!!")
+    }else{
+        toast.error("Nothing to save!");
+    }
+  } 
+  const handleLoad = () => {
+    dispatch(loadFromLocalStore());  
+    if(localStorage.getItem("tasks") && localStorage.getItem("tasks").length !== 0){
+         toast.success("Data loaded successfully!")
+    }else{
+      toast.error("No data found!")
+    }
+  }
+
   const toggleShowCompleted = () => {
     setShowCompletedTasks(!showCompletedTasks);
   };
@@ -38,7 +60,11 @@ function App() {
   const handleShowAllTasks = () => {
     setShowCompletedTasks(false);
   };
-
+  
+  const [color, setColor] = useState("#000000");
+  const onColorChange = (e) => {
+    setColor(e.target.value);
+  }
   return (
     <>
       {/* Displaying tasks */}
@@ -86,6 +112,7 @@ function App() {
       {/* Floating action buttons */}
      
 
+
 <div>
   <div className="row position-fixed bottom-0 start-0 mb-3 ms-3">
     <div className="col-12 d-flex flex-row justify-content-center align-items-center gap-2">
@@ -100,6 +127,14 @@ function App() {
       <Fab className="all-task-button" onClick={handleShowAllTasks} aria-label="all tasks">
         <ListIcon />
       </Fab>
+
+      <Fab className="save-button" onClick={handleSave} aria-label="save">
+        <SaveIcon /> {/* Make sure to import this icon */}
+      </Fab>
+
+      <Fab className="load-button" onClick={handleLoad} aria-label="load">
+        <LoadIcon /> {/* Make sure to create or import a load icon */}
+      </Fab>
     </div>
   </div>
 </div>
@@ -111,7 +146,7 @@ function App() {
           open={open}
           onClose={handleClose}
           fullWidth
-          maxWidth="sm"
+          maxWidth="md"
           PaperProps={{
             sx: {
               backgroundColor: 'rgb(55,78,79)',
@@ -120,8 +155,8 @@ function App() {
             component: 'form',
             onSubmit: (event) => {
               event.preventDefault();
-              const taskTitle = event.target.taskName.value;
-              dispatch(addItem(taskTitle));
+              const taskTitle = event.target.taskName.value; 
+              dispatch(addItem({task:taskTitle, color:color}));
               handleClose();
             },
           }}
@@ -132,6 +167,7 @@ function App() {
               autoFocus
               required
               margin="dense"
+              className="mt-2"
               id="taskName"
               name="taskName"
               label="Add the task description"
@@ -157,6 +193,33 @@ function App() {
                 },
               }}
             />
+            <TextField
+            label="Choose a color"
+            type="color"
+            className="mt-2"
+            fullWidth
+            value={color}
+            onChange={onColorChange}
+            InputLabelProps={{
+                sx: { color: 'white' },
+              }}
+              InputProps={{
+                sx: {
+                  backgroundColor: 'rgb(55,78,79)',
+                  color: 'white',
+                  '& .MuiOutlinedInput-notchedOutline': {
+                    borderColor: 'white',
+                  },
+                  '&:hover .MuiOutlinedInput-notchedOutline': {
+                    borderColor: 'white',
+                  },
+                  '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                    borderColor: 'white',
+                  },
+                },
+              }}
+
+            variant="outlined"/>
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose} variant="light">
@@ -168,6 +231,7 @@ function App() {
           </DialogActions>
         </Dialog>
       </React.Fragment>
+      <ToastContainer autoClose={2000}/>
     </>
   );
 }

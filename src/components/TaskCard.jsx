@@ -27,7 +27,7 @@ function TaskCard({taskItem}) {
         />
       </div>
       <div className="col">
-        <label htmlFor={`checkId-${taskItem.id}`} className="form-check-label">
+        <label htmlFor={`checkId-${taskItem.id}`} className="form-check-label" style={{color:`${taskItem.color}`}}>
           {taskItem?.completed ? <s>{taskItem?.title}</s> : taskItem?.title}
         </label>
       </div>

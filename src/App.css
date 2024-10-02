@@ -27,3 +27,11 @@
   margin-right: 85% !important;
   margin-top: 10% !important;
 }
+
+.save-button{
+  background-color: pink !important;
+}
+
+.load-button{
+  background-color: cyan !important;
+}
