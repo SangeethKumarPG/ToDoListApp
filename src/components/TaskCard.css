@@ -10,4 +10,35 @@
 .adjust-width{
   width: 60% !important;
 }
+@media (min-width: 1200px) {
+  .adjust-width {
+    width: 60% !important; 
+  }
+  
+  .white-shadow {
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.6) !important;
+  }
+}
 
+@media (min-width: 768px) and (max-width: 1199px) {
+  .adjust-width {
+    width: 80% !important; 
+  }
+  
+  .white-shadow {
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5) !important; 
+  }
+}
+
+@media (max-width: 767px) {
+
+  .adjust-width {
+    width: 95% !important;
+    margin:0 auto !important;
+  }
+
+  .white-shadow {
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.4) !important;
+  }
+ 
+}

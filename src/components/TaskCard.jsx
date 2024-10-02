@@ -13,16 +13,33 @@ function TaskCard({taskItem}) {
     dispatch(deleteTask(taskItem.id))
   } 
   return (
-    <>
-      <div className="container border border-light rounded-2 m-2 p-2 white-shadow d-flex justify-content-evenly align-items-center adjust-width"> 
-            
-            <input type="checkbox" className="form-check-input" id={`checkId-${taskItem.id}`} checked={taskItem.completed} onChange={handleCheckBoxchange} /> {" "}
-            <label htmlFor={`checkId-${taskItem.id}`} className="form-check-label">{taskItem?.completed? <s>{taskItem?.title}</s>:taskItem?.title} </label>
+   
+<>
+  <div className="container border border-light rounded-2 p-2 white-shadow adjust-width"> 
+    <div className="row align-items-center justify-content-between">
+      <div className="col-auto">
+        <input 
+          type="checkbox" 
+          className="form-check-input" 
+          id={`checkId-${taskItem.id}`} 
+          checked={taskItem.completed} 
+          onChange={handleCheckBoxchange} 
+        />
+      </div>
+      <div className="col">
+        <label htmlFor={`checkId-${taskItem.id}`} className="form-check-label">
+          {taskItem?.completed ? <s>{taskItem?.title}</s> : taskItem?.title}
+        </label>
+      </div>
+      <div className="col-auto">
         <button className="btn btn-transparent" onClick={handleDelete}>
-        <img src={trashIcon} /></button>
-        </div>
+          <img src={trashIcon} alt="Delete Task" />
+        </button>
+      </div>
+    </div>
+  </div>
+</>
 
-    </>
   )
 }
 
